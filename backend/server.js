@@ -17,8 +17,8 @@ app.use(express.json());
 
 // ---> ADD THIS LINE TO MOUNT THE AUTH ROUTES <---
 app.use('/api/auth', require('./routes/authRoutes'));
-// app.use('/api/plants', require('./routes/plantRoutes'));         // ADD THIS
-// app.use('/api/favorites', require('./routes/favoriteRoutes'));   // ADD THIS
+app.use('/api/plants', require('./routes/plantRoutes'));         // ADD THIS
+app.use('/api/favorites', require('./routes/favoriteRoutes'));   // ADD THIS
 
 // A simple test route to verify the API is alive
 app.get('/', (req, res) => {
