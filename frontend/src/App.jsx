@@ -3,6 +3,7 @@ import { useAuth } from './context/AuthContext';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
+import Favorites from './pages/Favorites';
 
 function App() {
   const { user, logout } = useAuth();
@@ -18,8 +19,9 @@ function App() {
             <Link to="/" className="hover:text-sage transition font-semibold">Home</Link>
             {user ? (
               <>
-                <span className="text-sm italic text-sage mr-2">Welcome, {user.name}</span>
-                <button onClick={logout} className="hover:text-turmeric transition font-semibold">Logout</button>
+                <Link to="/favorites" className="hover:text-sage transition font-semibold text-turmeric">My Garden</Link>
+                <span className="text-sm italic text-sage mr-2 ml-2">Welcome, {user.name}</span>
+                <button onClick={logout} className="hover:text-red-400 transition font-semibold">Logout</button>
               </>
             ) : (
               <>
@@ -36,6 +38,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          {/* New route for Favorites */}
+          <Route path="/favorites" element={user ? <Favorites /> : <Login />} /> 
         </Routes>
       </main>
 
