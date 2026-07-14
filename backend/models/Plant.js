@@ -3,8 +3,8 @@ const mongoose = require('mongoose');
 const plantSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, 'Please add a plant name'],
-    trim: true
+    required: true,
+    unique: true
   },
   slug: {
     type: String,
@@ -13,45 +13,52 @@ const plantSchema = new mongoose.Schema({
   },
   scientificName: {
     type: String,
-    trim: true
+    required: true
   },
   category: {
     type: String,
-    enum: ['Medicinal', 'Aromatic', 'Culinary', 'Ayurvedic', 'Other'],
-    default: 'Medicinal'
+    required: true,
+    enum: ['Ayurvedic', 'Medicinal', 'Aromatic', 'Culinary', 'Other']
   },
   description: {
     type: String,
-    required: [true, 'Please add a description']
+    required: true
+  },
+  region: {
+    type: String,
+    required: true
   },
   uses: {
     type: [String],
-    default: []
+    required: true
   },
   benefits: {
     type: [String],
-    default: []
+    required: true
   },
+  // Phase 2 Fields (Images & Audio)
   imageUrl: {
     type: String,
-    default: 'no-photo.jpg'
+    default: '' 
   },
   audioUrl: {
-    type: String
+    type: String,
+    default: ''
   },
-  region: {
-    type: String
+  // Phase 3 Fields (3D Models)
+  model3dUrl: {
+    type: String,
+    default: ''
+  },
+  modelCredit: {
+    type: String,
+    default: ''
   },
   createdBy: {
-    type: mongoose.Schema.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true
   }
-}, {
-  timestamps: true
-});
-
-// Create text index for the frontend search bar
-plantSchema.index({ name: 'text', scientificName: 'text', description: 'text' });
+}, { timestamps: true });
 
 module.exports = mongoose.model('Plant', plantSchema);

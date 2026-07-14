@@ -40,8 +40,16 @@ const importData = async () => {
     });
 
     // 3. Attach the admin user as the creator of each plant
+   // 3. Attach the admin user AND auto-generate a unique slug for each plant
     const samplePlants = plantsData.map(plant => {
-      return { ...plant, createdBy: adminUser._id };
+      // Converts "Aloe Vera" into "aloe-vera"
+      const generatedSlug = plant.name.toLowerCase().replace(/ /g, '-'); 
+      
+      return { 
+        ...plant, 
+        slug: generatedSlug,
+        createdBy: adminUser._id 
+      };
     });
 
     // 4. Insert plants into the database
