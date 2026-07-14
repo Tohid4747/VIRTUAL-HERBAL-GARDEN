@@ -1,15 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const { getPlants, getPlantBySlug, createPlant, updatePlant, deletePlant } = require('../controllers/plantController');
-const { protect, adminOnly } = require('../middleware/auth');
+const auth = require('../middleware/auth'); // Updated import
 
 router.route('/')
   .get(getPlants)
-  .post(protect, adminOnly, createPlant);
+  .post(auth, auth.adminOnly, createPlant); // Updated middleware usage
 
 router.route('/:id')
-  .put(protect, adminOnly, updatePlant)
-  .delete(protect, adminOnly, deletePlant);
+  .put(auth, auth.adminOnly, updatePlant)   // Updated middleware usage
+  .delete(auth, auth.adminOnly, deletePlant); // Updated middleware usage
 
 // Separate route for slug to avoid conflicting with /:id
 router.get('/slug/:slug', getPlantBySlug);
